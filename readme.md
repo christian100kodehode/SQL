@@ -32,7 +32,7 @@ Databasen består av fire tabeller for å katalogisere bøker, fysiske kopier, l
 | `ISBN`  | `VARCHAR(17)`   | `FOREIGN KEY` ` ON DELETE CASCADE` `ON UPDATE CASCADE`  | Referer til ISBN i bok tabellen. Kobler bok til spesifikk tittel. Blir ISBN slettet fra bok tabellen blir alle eksemplarer i denne tabellen slettet. Blir ISBN oppdatert blir alle eksemplarer i denne tabellen oppdatert. |
 | `eksnr` | `SMALLINT UNSIGNED`      | `NOT NULL`     | Eksemplar nummer av bok, opp til 65535 kan ikke være negativ verdi eller tom.  |
 
-**Hovednøkkel består av begge verdiene: eksnr og ISBN. Sammensatt nøkkel, dermed unik for hver fysiske kopi av bøkene.**<br>
+**Hovednøkkel består av begge verdiene: ISBN og eksnr. Sammensatt nøkkel, dermed unik for hver fysiske kopi av bøkene.**<br>
 
 **Fremmednøkkel: ISBN. Referer til ISBN i bok tabellen. Kobler bok mot ISBN nummer i bok tabellen.**<br>
 
