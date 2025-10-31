@@ -1,14 +1,17 @@
 
-ga_bibiliotek: En relasjonsdatabase for et biblioteksystem laget for MySQL, med støtte for alle Norske tegn med utf8mb4 tegnesett.
+# ga_bibiliotek: 
+En relasjonsdatabase for et biblioteksystem laget for MySQL, med støtte for alle Norske tegn med utf8mb4 tegnesett.
+
+
 
 _____________________________________________________
-(1) Tabelltruktur
+## (1) Tabelltruktur
 _____________________________________________________
 
 Tabeller:
 1. bok - Bøkene i bilbioteket
 Kolonne - Type - Informasjon
-ISBN - BIGINT - Hovednøkkel - Unik bok identifikasjon, Bigint viss ISBN vil gå over 10 siffer i fremtiden (mange ISBN er 13 siffer).
+ISBN - BIGINT - Hovednøkkel - Unik bok identifikasjon, Bigint hvis ISBN vil gå over 10 siffer (mange ISBN er 13 siffer).
 Tittel - VARCHAR(100) - Tittel på bok, opp til hundre tegn.
 Forfatter - VARCHAR(100) - Navn på forfatter, opp til hundre tegn.
 Forlag - VARCHAR(50) - Navn på forlag, opp til femti tegn.
@@ -17,7 +20,7 @@ AntallSider - SMALLINT - Sider på nok, støtter opp til 32768 holder for denne 
 
 En rad for hver unike bok, ingen kopier selv ved flere kopier av samme bok.
 
-2. eksemplat - Fysiske utgaver
+2. eksemplar - Fysiske utgaver
 Kolonne - Type - Informasjon
 ISBN - BIGINT - Referer til bok.ISBN
 eksnr - SMALLINT - Eksemplar nummer av bok (opp til 32768 kopier.)
@@ -31,7 +34,7 @@ Kolonne - Type - Informasjon
 Lnr - INT AUTO_INCREMENT - Hovednøkkel, blir automatisk generert etter posisjon i tabellen.
 Fornavn - VARCHAR(100) - Fornavn, opp til hundre tegn.
 Etternavn - VARCHAR(100) - Etternavn, opp til hundre tegn.
-Adresse - VARCHAR(100) - Adresse, opp til hundre tegn.
+Adresse - VARCHAR(100) - Adressen, opp til hundre tegn.
 
 En rad for hver lånetaker.
 
