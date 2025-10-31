@@ -1,33 +1,43 @@
 
-# ga_bibiliotek: 
-En relasjonsdatabase for et biblioteksystem laget for MySQL, med støtte for alle Norske tegn med utf8mb4 tegnesett.
+# Bibliotek Database: ga_bibiliotek
+[![MySQL Database](https://webuilddatabases.com/wp-content/uploads/2015/03/mysql-icon-250x314.png)](https://github.com/christian100kodehode/SQL.git)
+
+SQL skript for **ga_bibliotek**, en relasjonsdatabase for et biblioteksystem. Laget for **MySQL** med **0utf8mb4** tegnsett for støtte for alle Norske tegn.
+
+## Databaseskjema
+
+Databasen består av fire tabeller for å katalogisere bøker, fysiske kopier, lånetakere og utlån.
+
+### (1) Tabelltstruktur 1 - 4
+
+### 1. "bok" - Boktitler i bilbioteket.
+
+| Kolonne      | Type          | Vilkår (Constraints)                         | Beskrivelse                                                                 |
+|-------------|---------------|-----------------------------------------------|-----------------------------------------------------------------------------|
+| `ISBN`      | `VARCHAR(17)`      | `PRIMARY KEY`, `UNIQUE`, `NOT NULL`      | Unik bok identifisering. Lagret som en string med opp til 17 tegn (støtte for ISBN-10 og ISBN-13, ISBN-10 kan ha bokstaver og tegn). Raden er hovednøkkel i tabellen og må være unik, ingen andre bøker kan ha den samme verdi. Verdi kan ikke være tom.                                                                |
+| `Tittel`    | `VARCHAR(100)`| `NOT NULL`                                    | Tittel på bok, opp til hundre tegn. Verdi kan ikke være tom.                |
+| `Forfatter`  | `VARCHAR(100)` | `NOT NULL`                                  | Navn på forfatter, opp til hundre tegn. Verdi kan ikke være tom.            |
+| `Forlag`  |  `VARCHAR(50)`   | `NOT NULL`                                   | Navn på forlag, opp til femti tegn. Verdi kan ikke være tom.                |
+| `UtgittÅr`   | `SMALLINT UNSIGNED` | `NOT NULL` `CHECK (UtgittÅr > 1440)`            |  Utgitt år, støtter opp til verdi 65535, negative tall ikke tillat (unsigned). Verdi må være over 1440 (Første trykkte bok, Gutenberg Bibelen). Verdi kan ikke være tom.|
+| `AntallSider`| `SMALLINT UNSIGNED` | `NOT NULL` `CHECK (AntallSider BETWEEN 1 AND 10000)` |  Antall sider, støtter opp til verdi 65535, negative tall ikke tillat (unsigned). Verdi mellom 1 og 10 000. Verdi kan ikke være tom.|
+
+### **Sammendrag: _bok_ tabell:**
+### **En rad for hver unike bok, ingen duplikatrader, selv ved flere kopier av samme boken.**
 
 
+### 2. "eksemplar" - Fysiske eksemplar av bøker i bibioteket.
 
-_____________________________________________________
-## (1) Tabelltruktur
-_____________________________________________________
+| Kolonne | Type       | Constraints    | Vilkår (Constraints)                                               |
+|---------|------------|----------------|---------------------------------------------------------|
+| `ISBN`  | `VARCHAR(17)`   | `FOREIGN KEY` ` ON DELETE CASCADE` `ON UPDATE CASCADE`  | Referer til ISBN i bok tabellen. Kobler bok til spesifikk tittel. Blir ISBN slettet fra bok tabellen blir alle eksemplarer i denne tabellen slettet. Blir ISBN oppdatert blir alle eksemplarer i denne tabellen oppdatert. |
+| `eksnr` | `SMALLINT UNSIGNED`      | `NOT NULL`     | Eksemplar nummer av bok, opp til 65535 kan ikke være negativ verdi eller tom.  |
 
-Tabeller:
-1. bok - Bøkene i bilbioteket
-Kolonne - Type - Informasjon
-ISBN - BIGINT - Hovednøkkel - Unik bok identifikasjon, Bigint hvis ISBN vil gå over 10 siffer (mange ISBN er 13 siffer).
-Tittel - VARCHAR(100) - Tittel på bok, opp til hundre tegn.
-Forfatter - VARCHAR(100) - Navn på forfatter, opp til hundre tegn.
-Forlag - VARCHAR(50) - Navn på forlag, opp til femti tegn.
-UtgittÅr - SMALLINT - Utgitt år, støtter opp til 32768 holder for denne kategori og sparer plass.
-AntallSider - SMALLINT - Sider på nok, støtter opp til 32768 holder for denne kategori og sparer plass.
+**Hovednøkkel består av begge verdiene: eksnr og ISBN. Sammensatt nøkkel, dermed unik for hver fysiske kopi av bøkene.**<br>
 
-En rad for hver unike bok, ingen kopier selv ved flere kopier av samme bok.
+**Fremmednøkkel: ISBN. Referer til ISBN i bok tabellen. Kobler bok mot ISBN nummer i bok tabellen.**<br>
 
-2. eksemplar - Fysiske utgaver
-Kolonne - Type - Informasjon
-ISBN - BIGINT - Referer til bok.ISBN
-eksnr - SMALLINT - Eksemplar nummer av bok (opp til 32768 kopier.)
-Hovednøkkel - (eksnr, ISBN) - Sammensatt nøkkel, unik for hver fysiske kopi av bøkene.
-Fremmednøkkel - ISBN - Referer til bok.ISBN, kobler bok mot ISBN nummer i bok tabellen.
-
-En rad for hver fysiske kopi av bøkene i bibilioteket, 5 kopier av samme bok blir 5 rader.
+### **Sammendrag: _eksemplar_ tabell:**
+### **En rad for hver fysiske kopi av bøkene i bibilioteket, 5 kopier av samme bok blir 5 rader.**
 
 3. låner - Lånetaker
 Kolonne - Type - Informasjon
