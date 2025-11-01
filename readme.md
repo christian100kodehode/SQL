@@ -10,7 +10,10 @@ Databasen består av fire tabeller for å katalogisere bøker, fysiske kopier, l
 
 <!-- Tabeller -->
 
-[Bok tabell](#1-bok-boktitler-i-bilbioteket) - [Eksemplar tabell](#2-eksemplar---fysiske-eksemplar-av-bøker-i-bibioteket) - [Låner tabell](#3-låner---lånetakers-detaljer) - [Utlån tabell](#4-utlån---lån-som-er-utførtlevert)
+[Bok tabell](#1-bok---boktitler-i-bilbioteket-️) - [Eksemplar tabell](#2-eksemplar---fysiske-eksemplar-av-bøker-i-bibioteket-️) - [Låner tabell](#3-låner---lånetaker-detaljer-️) - 
+
+
+[Utlån tabell](#4-utlån---lån-som-er-utførtlevert------------️)
 
 <!-- SPACE -->
 
@@ -20,7 +23,7 @@ Databasen består av fire tabeller for å katalogisere bøker, fysiske kopier, l
 
 ### (1) Tabelltstruktur 1 - 4
 
-## 1. bok Boktitler i bilbioteket. [⬆️](#bibliotek-database-ga_bibiliotek)
+## 1. bok - Boktitler i bilbioteket. [⬆️](#bibliotek-database-ga_bibiliotek)
 _______________________________
 | Kolonne      | Type          | Vilkår (Constraints)                         | Beskrivelse                                                                 |
 |-------------|---------------|-----------------------------------------------|-----------------------------------------------------------------------------|
@@ -88,7 +91,7 @@ _______________________________
 
 <!-- SPACE -->
 
-## 4. utlån - Lån som er utført/levert. [⬆️](#bibliotek-database-ga_bibiliotek)
+## 4. utlån - Lån som er utført/levert. ##           [⬆️](#bibliotek-database-ga_bibiliotek)
 _______________________________
 
 | Kolonne | Type       |  Vilkår (Constraints)                                        |                                                                   |
