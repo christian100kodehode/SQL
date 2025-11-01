@@ -104,6 +104,9 @@ _______________________________
 låner(lNr):`ON DELETE RESTRICT` - Kan ikke slette lånetaker med aktive lån. 
 eksemplar(ISBN, EksNr): `ON DELETE RESTRICT` - Kan ikke slette kopi viss er på lån. **
 
+<!-- SPACE -->
+<br><br>
+<!-- SPACE -->
 
 ** active_loan_key - Unngå kopi av bok bli lånt flere ganger, observerte at kopi av bok kunne lånes selv om den var utlånt, en unik nøkkel løser dette. Nøkkel  er ISBN satt sammen med EkSnr (CONCAT verdier med '-' mellom verdiene), når levert er 0 sjekkes denne nøkkel. VIRTUAL rad som kjøres dynamisk etter behov, ikke lagret på disk.**
 
@@ -112,12 +115,17 @@ eksemplar(ISBN, EksNr): `ON DELETE RESTRICT` - Kan ikke slette kopi viss er på 
     `AS (CASE WHEN Levert = 0 THEN CONCAT(ISBN, '-', EksNr) ELSE NULL END) VIRTUAL,`
 `UNIQUE INDEX idx_active_loan (active_loan_key)`
 
+
 |Levert        | active_loan_key |       Tilgjengelig         |
 |--------------|-----------------|----------------------------|
 | 0 (utlånt)   | ISBN-EksNr      | Nei, unique index blokkerer|
 | 1 (innlevert)| NULL            | Ja - Null - ikke i index   |
 
 Dette gjør at samme kopi ikke lånes på samme tid igjen.
+
+<!-- SPACE -->
+<br><br>
+<!-- SPACE -->
 
 ## **Sammendrag:  ** ###
 ## En rad for hvert lån. Viser hvem som har lånt spesifik bok og om den er levert tilbake eller ikke. Er kopi av bok utlånt kan den ikke lånes før kopi er levert inn igjen
