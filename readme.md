@@ -31,8 +31,8 @@ _______________________________
 | `UtgittÅr`   | `SMALLINT UNSIGNED` | `NOT NULL` `CHECK (UtgittÅr > 1440)`            |  Utgitt år, støtter opp til verdi 65535, negative tall ikke tillat (unsigned). Verdi må være over 1440 (Første trykkte bok, Gutenberg Bibelen). Verdi kan ikke være tom.|
 | `AntallSider`| `SMALLINT UNSIGNED` | `NOT NULL` `CHECK (AntallSider BETWEEN 1 AND 10000)` |  Antall sider, støtter opp til verdi 65535, negative tall ikke tillat (unsigned). Verdi mellom 1 og 10 000. Verdi kan ikke være tom.|
 
-### **Sammendrag: _bok_ tabell:**
-### **En rad for hver unike bok, med ISBN som identifikasjon, tittel, forfatter, forlag, utgittår og antallsider.**
+## **Sammendrag: _bok_ tabell:**
+## **En rad for hver unike bok, med ISBN som identifikasjon, tittel, forfatter, forlag, utgittår og antallsider.**
 
 
 <!-- SPACE -->
@@ -44,7 +44,7 @@ _______________________________
 
 
 
-## 2. eksemplar - Fysiske eksemplar av bøker i bibioteket. ## [⬆️](#bibliotek-database-ga_bibiliotek)
+## 2. eksemplar - Fysiske eksemplar av bøker i bibioteket. [⬆️](#bibliotek-database-ga_bibiliotek)
 _______________________________
 | Kolonne | Type       |  Vilkår (Constraints)                                        |                                                                  |
 |---------|------------|--------------------------------------------------------------|-------------------------------------------------------------------|
@@ -55,8 +55,8 @@ _______________________________
 
 **Fremmednøkkel: ISBN. Referer til ISBN i bok tabellen. Kobler bok mot ISBN nummer i bok tabellen.**<br>
 
-### **Sammendrag: _eksemplar_ tabell:** ###
-### **En rad for hver fysiske kopi av hver bok i bibilioteket dvs. 5 kopier av samme bok blir 5 rader.**
+## **Sammendrag: _eksemplar_ tabell:** ###
+## **En rad for hver fysiske kopi av hver bok i bibilioteket dvs. 5 kopier av samme bok blir 5 rader.**
 
 
 
@@ -77,8 +77,8 @@ _______________________________
 |Etternavn | `VARCHAR(100)` | Etternavn, opp til hundre tegn.|
 |Adresse | `VARCHAR(100)` | Adressen, opp til hundre tegn.|
 
-### **Sammendrag: _låner_**
-### **Data for låner. LNr blir gitt etter posisjon i listen. Inneholder, Fornavn, Etternavn og Adresse.** ###
+## **Sammendrag: _låner_**
+## **Data for låner. LNr blir gitt etter posisjon i listen. Inneholder, Fornavn, Etternavn og Adresse.**
 
 
 
@@ -119,6 +119,6 @@ eksemplar(ISBN, EksNr): `ON DELETE RESTRICT` - Kan ikke slette kopi viss er på 
 
 Dette gjør at samme kopi ikke lånes på samme tid igjen.
 
-### **Sammendrag:  ** ###
-### En rad for hvert lån. Viser hvem som har lånt spesifik bok og om den er levert tilbake eller ikke. Er kopi av bok utlånt kan den ikke lånes før kopi er levert inn igjen###
+## **Sammendrag:  ** ###
+## En rad for hvert lån. Viser hvem som har lånt spesifik bok og om den er levert tilbake eller ikke. Er kopi av bok utlånt kan den ikke lånes før kopi er levert inn igjen
 
