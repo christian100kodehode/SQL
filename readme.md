@@ -26,13 +26,13 @@ Databasen består av fire tabeller for å katalogisere bøker, fysiske kopier, l
 _______________________________
 
 | Kolonne      | Type          | Vilkår (Constraints)                         | Beskrivelse                                                                 |
-|-------------|---------------|-----------------------------------------------|-----------------------------------------------------------------------------|
-| `ISBN`      | `VARCHAR(17)`      | `PRIMARY KEY`, `UNIQUE`, `NOT NULL`      | Unik bok identifisering. Lagret som en string med opp til 17 tegn (støtte for ISBN-10 og ISBN-13, ISBN-10 kan ha bokstaver og tegn). Raden er hovednøkkel i tabellen og må være unik, ingen andre bøker kan ha den samme verdi. Verdi kan ikke være tom.                                                                                                                                              |
-| `Tittel`    | `VARCHAR(100)`| `NOT NULL`                                    | Tittel på bok, opp til hundre tegn. Verdi kan ikke være tom.                |
+|-------------|----------------|----------------------------------------------|-----------------------------------------------------------------------------|
+| `ISBN`      | `VARCHAR(17)`  | `PRIMARY KEY`, `UNIQUE`, `NOT NULL`          | Unik bok identifisering. Lagret som en string med opp til 17 tegn (støtte for ISBN-10 og ISBN-13, ISBN-10 kan ha bokstaver og tegn). Raden er hovednøkkel i tabellen og må være unik, ingen andre bøker kan ha den samme verdi. Verdi kan ikke være tom.                                                                                                                                              |
+| `Tittel`     | `VARCHAR(100)` | `NOT NULL`                                   | Tittel på bok, opp til hundre tegn. Verdi kan ikke være tom.               |
 | `Forfatter`  | `VARCHAR(100)` | `NOT NULL`                                  | Navn på forfatter, opp til hundre tegn. Verdi kan ikke være tom.            |
-| `Forlag`  |  `VARCHAR(50)`   | `NOT NULL`                                   | Navn på forlag, opp til femti tegn. Verdi kan ikke være tom.                |
-| `UtgittÅr`   | `SMALLINT UNSIGNED` | `NOT NULL` `CHECK (UtgittÅr > 1440)`   |  Utgitt år, støtter opp til verdi 65535, negative tall ikke tillat (unsigned). Verdi må være over 1440 (Første trykkte bok, Gutenberg Bibelen). Verdi kan ikke være tom.                                                       |
-| `AntallSider`| `SMALLINT UNSIGNED` | `NOT NULL` `CHECK (AntallSider BETWEEN 1 AND 10000)` |  Antall sider, støtter opp til verdi 65535, negative tall ikke tillat (unsigned). Verdi mellom 1 og 10 000. Verdi kan ikke være tom.                                                                                       |
+| `Forlag`     |  `VARCHAR(50)` | `NOT NULL`                                | Navn på forlag, opp til femti tegn. Verdi kan ikk være tom.                   |
+| `UtgittÅr`   | `SMALLINT UNSIGNED` | `NOT NULL` `CHECK (UtgittÅr > 1440)`   | Utgitt år, støtter opp til verdi 65535, negative tall ikke tillat (unsigned). Verdi må være over 1440 (Første trykkte bok, Gutenberg Bibelen). Verdi kan ikke være tom.                                                       |
+| `AntallSider`| `SMALLINT UNSIGNED` | `NOT NULL` `CHECK (AntallSider BETWEEN 1 AND 10000)` | Antall sider, støtter opp til verdi 65535, negative tall ikke tillat (unsigned). Verdi mellom 1 og 10 000. Verdi kan ikke være tom.                                                                                       |
 
 ## **Sammendrag: _bok_ tabell:**
 ## **En rad for hver unike bok, med ISBN som identifikasjon, tittel, forfatter, forlag, utgittår og antallsider.**
@@ -48,10 +48,10 @@ _______________________________
 ## 2. eksemplar - Fysiske eksemplar av bøker i bibioteket. 
 _______________________________
 
-| Kolonne | Type       |  Vilkår (Constraints)                                        |                                                                   |
-|---------|------------|--------------------------------------------------------------|-------------------------------------------------------------------|
-| `ISBN`  | `VARCHAR(17)`   | `FOREIGN KEY` ` ON DELETE CASCADE` `ON UPDATE CASCADE`  | Referer til ISBN i bok tabellen. Kobler bok til spesifikk tittel. Blir ISBN slettet fra bok tabellen blir alle eksemplarer i denne tabellen slettet. Blir ISBN oppdatert blir alle eksemplarer i denne tabellen oppdatert.  |
-| `eksnr` | `SMALLINT UNSIGNED`      | `NOT NULL`     | Eksemplar nummer av bok, opp til 65535 kan ikke være negativ verdi eller tom.                     |
+| Kolonne | Type               |      Vilkår (Constraints)                             |                                                                  |
+|---------|--------------------|-------------------------------------------------------|------------------------------------------------------------------|
+| `ISBN`  | `VARCHAR(17)`      | `FOREIGN KEY` ` ON DELETE CASCADE` `ON UPDATE CASCADE`| Referer til ISBN i bok tabellen. Kobler bok til spesifikk tittel. Blir ISBN slettet fra bok tabellen blir alle eksemplarer i denne tabellen slettet. Blir ISBN oppdatert blir alle eksemplarer i denne tabellen oppdatert.  |
+| `eksnr` | `SMALLINT UNSIGNED`| `NOT NULL`                                            | Eksemplar nummer av bok, opp til 65535 kan ikke være negativ verdi eller tom.                     |
 
 **Hovednøkkel består av begge verdiene: ISBN og eksnr. Sammensatt nøkkel av begge verdier, en unik verdi per bok i biblioteket.**<br>
 
@@ -92,14 +92,14 @@ _______________________________
 ## 4. utlån - Lån som er utført/levert. ##           
 _______________________________
 
-| Kolonne | Type       |  Vilkår (Constraints)    |                                                                                            |
-|---------|------------|--------------------------|--------------------------------------------------------------------------------------------|
-|utlånsnr | `INT`      |`AUTO_INCREMENT`          | Hovednøkkel, unikt nummer for alle lån. Blir automatisk generert etter posisjon i tabellen.|
-|Lnr      | `INT`      |`ON DELETE RESTRICT`      | Referer til låner.Lnr Lånetaker               |
-|ISBN     | `BIGINT`   |                          | Referer til eksemplar.ISBN                    |
-|Eksnr    | `SMALLINT UNSIGNED`| `NOT NULL`       | Referer til eksemplar.eksn Eksemplar av bok   |
-|Utlånsdato | `DATE`   |                          | Lånedato, satt til DATE (YYYY-MM-DD)          |
-|Levert    | `BOOLEAN` |                          | Bare 0 eller 1. (True/False) Levert tilbake = 1 , utlånt = 0|
+| Kolonne | Type       |  Vilkår (Constraints)         |                                                                                               |
+|---------|--------------------|-----------------------|-----------------------------------------------------------------------------------------------|
+|utlånsnr | `INT`              |`AUTO_INCREMENT`          | Hovednøkkel, unikt nummer for alle lån. Blir automatisk generert etter posisjon i tabellen.|
+|Lnr      | `INT`              |`ON DELETE RESTRICT`      | Referer til låner.Lnr Lånetaker                             |
+|ISBN     | `BIGINT`           |                          | Referer til eksemplar.ISBN                                  |
+|Eksnr    | `SMALLINT UNSIGNED`| `NOT NULL`               | Referer til eksemplar.eksn Eksemplar av bok                 |
+|Utlånsdato | `DATE`           |                          | Lånedato, satt til DATE (YYYY-MM-DD)                        |
+|Levert    | `BOOLEAN`         |                          | Bare 0 eller 1. (True/False) Levert tilbake = 1 , utlånt = 0|
 
 **Fremmednøkkler: <br>
 låner(lNr):`ON DELETE RESTRICT` - Kan ikke slette lånetaker med aktive lån. 
