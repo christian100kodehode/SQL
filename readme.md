@@ -27,7 +27,7 @@ Databasen består av fire tabeller for å katalogisere bøker, fysiske kopier, l
 
 ### 2. "eksemplar" - Fysiske eksemplar av bøker i bibioteket.
 
-| Kolonne | Type       | Constraints    | Vilkår (Constraints)                                               |
+| Kolonne | Type       |  Vilkår (Constraints)                                                    |
 |---------|------------|----------------|---------------------------------------------------------|
 | `ISBN`  | `VARCHAR(17)`   | `FOREIGN KEY` ` ON DELETE CASCADE` `ON UPDATE CASCADE`  | Referer til ISBN i bok tabellen. Kobler bok til spesifikk tittel. Blir ISBN slettet fra bok tabellen blir alle eksemplarer i denne tabellen slettet. Blir ISBN oppdatert blir alle eksemplarer i denne tabellen oppdatert. |
 | `eksnr` | `SMALLINT UNSIGNED`      | `NOT NULL`     | Eksemplar nummer av bok, opp til 65535 kan ikke være negativ verdi eller tom.  |
