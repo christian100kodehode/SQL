@@ -2,7 +2,7 @@
 # Bibliotek Database: ga_bibiliotek
 [![MySQL Database](https://webuilddatabases.com/wp-content/uploads/2015/03/mysql-icon-250x314.png)](https://github.com/christian100kodehode/SQL.git)
 
-SQL skript for **ga_bibliotek**, en relasjonsdatabase for et biblioteksystem. Laget for **MySQL** med **0utf8mb4** tegnsett for støtte for alle Norske og andre tegn (Full Unicode Support).
+SQL skript for **ga_bibliotek**, en relasjonsdatabase for et biblioteksystem. Laget for **MySQL** V:_8.0.33_ med **0utf8mb4** tegnsett for støtte for alle Norske og andre tegn (Full Unicode Support).
 
 ## Databaseskjema
 
@@ -10,10 +10,9 @@ Databasen består av fire tabeller for å katalogisere bøker, fysiske kopier, l
 
 <!-- Tabeller -->
 
-[Bok tabell](#1-bok---boktitler-i-bilbioteket-️) - [Eksemplar tabell](#2-eksemplar---fysiske-eksemplar-av-bøker-i-bibioteket-️) - [Låner tabell](#3-låner---lånetaker-detaljer-️) - 
+[Bok tabell](#1-bok---boktitler-i-bilbioteket) - [Eksemplar tabell](#2-eksemplar---fysiske-eksemplar-av-bøker-i-bibioteket) - [Låner tabell](#3-låner---lånetaker-detaljer) - [Utlån tabell](#4-utlån---lån-som-er-utførtlevert) + [ER Diagram](#er-diagram-ga_database)
 
 
-[Utlån tabell](#4-utlån---lån-som-er-utførtlevert------------️)
 
 <!-- SPACE -->
 
@@ -23,7 +22,7 @@ Databasen består av fire tabeller for å katalogisere bøker, fysiske kopier, l
 
 ### (1) Tabelltstruktur 1 - 4
 
-## 1. bok - Boktitler i bilbioteket. [⬆️](#bibliotek-database-ga_bibiliotek)
+## 1. bok - Boktitler i bilbioteket.
 _______________________________
 | Kolonne      | Type          | Vilkår (Constraints)                         | Beskrivelse                                                                 |
 |-------------|---------------|-----------------------------------------------|-----------------------------------------------------------------------------|
@@ -37,7 +36,7 @@ _______________________________
 ## **Sammendrag: _bok_ tabell:**
 ## **En rad for hver unike bok, med ISBN som identifikasjon, tittel, forfatter, forlag, utgittår og antallsider.**
 
-
+[⬆️](#bibliotek-database-ga_bibiliotek)
 <!-- SPACE -->
 
 <br><br><br><br><br><br><br>
@@ -45,9 +44,7 @@ _______________________________
 <!-- SPACE -->
 
 
-
-
-## 2. eksemplar - Fysiske eksemplar av bøker i bibioteket. [⬆️](#bibliotek-database-ga_bibiliotek)
+## 2. eksemplar - Fysiske eksemplar av bøker i bibioteket. 
 _______________________________
 | Kolonne | Type       |  Vilkår (Constraints)                                        |                                                                  |
 |---------|------------|--------------------------------------------------------------|-------------------------------------------------------------------|
@@ -61,8 +58,7 @@ _______________________________
 ## **Sammendrag: _eksemplar_ tabell:** ###
 ## **En rad for hver fysiske kopi av hver bok i bibilioteket dvs. 5 kopier av samme bok blir 5 rader.**
 
-
-
+[⬆️](#bibliotek-database-ga_bibiliotek)
 <!-- SPACE -->
 
 <br><br><br><br><br><br><br>
@@ -70,7 +66,7 @@ _______________________________
 <!-- SPACE -->
 
 
-## 3. låner - Lånetaker detaljer. [⬆️](#bibliotek-database-ga_bibiliotek)
+## 3. låner - Lånetaker detaljer. 
 _______________________________
 
 | Kolonne | Type       |  Vilkår (Constraints)                                        |                                                                   |
@@ -83,15 +79,15 @@ _______________________________
 ## **Sammendrag: _låner_**
 ## **Data for låner. LNr blir gitt etter posisjon i listen. Inneholder, Fornavn, Etternavn og Adresse.**
 
-
-
+[⬆️](#bibliotek-database-ga_bibiliotek)
 <!-- SPACE -->
 
 <br><br><br><br><br><br><br>
 
 <!-- SPACE -->
 
-## 4. utlån - Lån som er utført/levert. ##           [⬆️](#bibliotek-database-ga_bibiliotek)
+
+## 4. utlån - Lån som er utført/levert. ##           
 _______________________________
 
 | Kolonne | Type       |  Vilkår (Constraints)                                        |                                                                   |
@@ -133,3 +129,47 @@ Dette gjør at samme kopi ikke lånes på samme tid igjen.
 ## **Sammendrag:  ** ###
 ## En rad for hvert lån. Viser hvem som har lånt spesifik bok og om den er levert tilbake eller ikke. Er kopi av bok utlånt kan den ikke lånes før kopi er levert inn igjen
 
+[⬆️](#bibliotek-database-ga_bibiliotek)
+
+
+## **ER DIAGRAM: ga_database**
+
+
+
+GA BIBLIOTEK DATABASE: MySQL 8.0.33 – utf8mb4_unicode_ci 
+_________________________________________________________
+
+
+
+
+
+         ┌──────────────┐          ┌─────────────────┐
+         │    bok       │          │   eksemplar     │
+         │              │◄───────1─│  (Fysisk kopi)  │
+         ├──────────────┤    *     ├─────────────────┤
+         │ ISBN         │─────────>│ ISBN            │
+         │ Tittel       │          │ EksNr           │
+         │ Forfatter    │          └─────────────────┘
+         │ Forlag       │                   │
+         │ UtgittÅr     │                   │
+         │ AntallSider  │                   │
+         └──────────────┘                   │
+                                            │
+                                            │
+                                            ▼
+         ┌─────────────────┐          ┌─────────────────┐
+         │    låner        │          │     utlån       │
+         │ (Borrower)      │◄──────1──│                 │
+         ├─────────────────┤    *     ├─────────────────┤
+         │ LNr (PN)        │─────────>│ UtlånsNr (PN)   │
+         │ Fornavn         │          │ LNr (FN)        │
+         │ Etternavn       │          │ ISBN (FN)       │
+         │ Adresse         │          │ EksNr (FN)      │
+         └─────────────────┘          │ Utlånsdato      │
+                                      │ Levert          │
+                                      │ active_loan_key │
+                                      |  (VIRTUAL)      │
+                                      └─────────────────┘
+         
+<!--  -->
+[⬆️ Tilbake til topp.](#bibliotek-database-ga_bibiliotek)
