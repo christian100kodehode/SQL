@@ -57,8 +57,36 @@ ORDER BY t.Tittel;
 
 9. Antall utlån per låner
 
+SELECT CONCAT(l.Fornavn, ' ', l.Etternavn) AS Låner, COUNT(u.UtlånsNr) AS Antall_lån
+FROM låner l
+LEFT JOIN utlån u ON l.LNr = u.LNr
+GROUP BY l.LNr, l.Fornavn, l.Etternavn
+ORDER BY Antall_lån DESC, Låner;
+
 10. Antall utlån per bok
+
+SELECT b.Tittel, b.Forfatter, COUNT(u.UtlånsNr) AS Antall_lån
+FROM bok b
+LEFT JOIN eksemplar e ON b.ISBN = e.ISBN
+LEFT JOIN utlån u ON e.ISBN = u.ISBN AND e.EksNr = u.EksNr
+GROUP BY b.ISBN, b.Tittel, b.Forfatter
+ORDER BY Antall_lån DESC, b.Tittel;
 
 11. Alle bøker som ikke har blitt lånt ut
 
+SELECT b.Tittel, b.Forfatter, COUNT(e.EksNr) AS Antall_Eksemplarer
+FROM bok b
+LEFT JOIN eksemplar e ON b.ISBN = e.ISBN
+LEFT JOIN utlån u ON e.ISBN = u.ISBN AND e.EksNr = u.EksNr
+GROUP BY b.ISBN, b.Tittel, b.Forfatter
+HAVING COUNT(u.UtlånsNr) = 0
+ORDER BY b.Tittel;
+
 12. Forfatter og antall utlånte bøker per forfatter
+
+SELECT b.Forfatter, COUNT(u.UtlånsNr) AS Antall_lån
+FROM bok b
+LEFT JOIN eksemplar e ON b.ISBN = e.ISBN
+LEFT JOIN utlån u ON e.ISBN = u.ISBN AND e.EksNr = u.EksNr
+GROUP BY b.Forfatter
+ORDER BY Antall_lån DESC, b.Forfatter;

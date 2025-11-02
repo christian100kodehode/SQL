@@ -172,6 +172,20 @@ _________________________________________________________
                                       │ active_loan_key │
                                       |  (VIRTUAL)      │
                                       └─────────────────┘
-         
+<!--  -->
+[⬆️ Tilbake til topp.](#bibliotek-database-ga_bibiliotek)
+ <!-- SPACE -->
+
+<br><br><br><br>
+<!-- SPACE -->
+
+#### [Oppgave 3 - SQL spørringer](/Oppgave%203.sql) ####
+
+ <!-- SPACE -->
+
+<br><br><br><br>
+<!-- SPACE -->
+
+
 <!--  -->
 [⬆️ Tilbake til topp.](#bibliotek-database-ga_bibiliotek)
