@@ -15,7 +15,7 @@ SQL skript for **ga_bibliotek**, en relasjonsdatabase for et biblioteksystem. La
 
 ### Oppgave 1.1 og 1.2: Opprettelse av Databasen og tabellene: ###
 _______________________________
-Opprettelse av Databasen og Tabellene: [Script for å lage ga_bibiliotek med eksempeldata](/1.1.sql)
+Opprettelse av Databasen og Tabellene: [Script for å lage ga_bibiliotek med eksempeldata](Oppgave_1.sql)
 
 <!-- SPACE -->
 
@@ -197,7 +197,7 @@ _________________________________________________________
 <br><br><br><br>
 <!-- SPACE -->
 
-#### [Oppgave 3 - SQL spørringer](/Oppgave%203.sql) ####
+#### [Oppgave 3 - SQL spørringer](Oppgave_3.sql) ####
 
  <!-- SPACE -->
 
