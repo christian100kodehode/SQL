@@ -39,7 +39,15 @@ Databasen består av fire tabeller for å katalogisere bøker, fysiske kopier, l
 
 <!-- Tabeller -->
 
-[Bok tabell](#1-bok---boktitler-i-biblioteket) - [Eksemplar tabell](#2-eksemplar---fysiske-eksemplar-av-bøker-i-bibioteket) - [Låner tabell](#3-låner---lånetaker-detaljer) - [Utlån tabell](#4-utlån---lån-som-er-utførtlevert) + [ER Diagram](#er-diagram-ga_database)
+- [Bok tabell](#1-bok---boktitler-i-biblioteket)
+- [Eksemplar tabell](#2-eksemplar---fysiske-eksemplar-av-bøker-i-bibioteket)
+- [Låner tabell](#3-låner---lånetaker-detaljer)
+- [Utlån tabell](#4-utlån---lån-som-er-utførtlevert)
+___
+ER diagram over database:
+___
+ 
+- [ER Diagram](#er-diagram-ga_database)
 
 [⬆️](#bibliotek-database-ga_bibiliotek)
 
@@ -57,11 +65,11 @@ _______________________________
 | Kolonne      | Type          | Vilkår (Constraints)                         | Beskrivelse                                                                 |
 |-------------|----------------|----------------------------------------------|-----------------------------------------------------------------------------|
 | `ISBN`      | `VARCHAR(17)`  | `PRIMARY KEY`, `UNIQUE`, `NOT NULL`          | Unik bok identifisering. Lagret som en string med opp til 17 tegn (støtte for ISBN-10 og ISBN-13, ISBN-10 kan ha bokstaver og tegn). Raden er hovednøkkel i tabellen og må være unik, ingen andre bøker kan ha den samme verdi. Verdi kan ikke være tom.                                                                                                                                              |
-| `Tittel`     | `VARCHAR(100)` | `NOT NULL`                                   | Tittel på bok, opp til hundre tegn. Verdi kan ikke være tom.               |
+| `Tittel`     | `VARCHAR(100)` | `NOT NULL`                                  | Tittel på bok, opp til hundre tegn. Verdi kan ikke være tom.                |
 | `Forfatter`  | `VARCHAR(100)` | `NOT NULL`                                  | Navn på forfatter, opp til hundre tegn. Verdi kan ikke være tom.            |
-| `Forlag`     |  `VARCHAR(50)` | `NOT NULL`                                | Navn på forlag, opp til femti tegn. Verdi kan ikk være tom.                   |
+| `Forlag`     |  `VARCHAR(50)` | `NOT NULL`                                  | Navn på forlag, opp til femti tegn. Verdi kan ikk være tom.                   |
 | `UtgittÅr`   | `SMALLINT UNSIGNED` | `NOT NULL` `CHECK (UtgittÅr > 1440)`   | Utgitt år, støtter opp til verdi 65535, negative tall ikke tillat (unsigned). Verdi må være over 1440 (Første trykkte bok, Gutenberg Bibelen). Verdi kan ikke være tom.                                                       |
-| `AntallSider`| `SMALLINT UNSIGNED` | `NOT NULL` `CHECK (AntallSider BETWEEN 1 AND 10000)` | Antall sider, støtter opp til verdi 65535, negative tall ikke tillat (unsigned). Verdi mellom 1 og 10 000. Verdi kan ikke være tom.                                                                                       |
+| `AntallSider`| `SMALLINT UNSIGNED` | `NOT NULL` `CHECK (AntallSider BETWEEN 1 AND 10000)` | Antall sider, støtter opp til verdi 65535 negative tall ikke tillat (unsigned). Satt til 1 og 10 000 på denne kolonne. Verdi kan ikke være tom.                                                                                       |
 
 ## **Sammendrag: _bok_ tabell:**
 ## **En rad for hver unike bok, med ISBN som identifikasjon, tittel, forfatter, forlag, utgittår og antallsider.**
@@ -161,7 +169,10 @@ Dette gjør at samme kopi ikke lånes på samme tid igjen.
 ## En rad for hvert lån. Viser hvem som har lånt spesifik bok og om den er levert tilbake eller ikke. Er kopi av bok utlånt kan den ikke lånes før kopi er levert inn igjen
 
 [⬆️](#bibliotek-database-ga_bibiliotek)
+ <!-- SPACE -->
 
+<br><br><br><br>
+<!-- SPACE -->
 
 ## **ER DIAGRAM: ga_database**
 
@@ -201,6 +212,14 @@ _________________________________________________________
                                       │ active_loan_key │
                                       |  (VIRTUAL)      │
                                       └─────────────────┘
+
+| Tabell     |      Funksjon         |     Nøkkel         |
+|------------|-----------------------|--------------------|
+| bok        | 1 unik bok tittel     |       ISBN         |
+|Eksmplar    |   Fysisk kopi         |  (ISBN, EksNr)     |
+| Låner      | Lånetaker             |       lNr          |
+| Utlån      | 1 lån                 |     UtlånsNr       |
+------------------------------------------------------------
 <!--  -->
 [⬆️ Tilbake til topp.](#bibliotek-database-ga_bibiliotek)
  <!-- SPACE -->
