@@ -7,6 +7,17 @@ _______________________________
 
 SQL skript for **ga_bibliotek**, en relasjonsdatabase for et biblioteksystem. Laget for **MySQL** V:_8.0.33_ med **0utf8mb4** tegnsett for støtte for alle Norske og andre tegn (Full Unicode Support).
 
+Mappestruktur:
+```
+Bilder/
+├─ mysql.png
+SQL/
+├─ Oppgave_1.sql
+├─ Oppgave_3.sql
+readme.md
+```
+
+
 <!-- SPACE -->
 
 <br><br><br><br><br><br><br>
